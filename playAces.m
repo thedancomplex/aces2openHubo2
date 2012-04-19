@@ -17,12 +17,24 @@ huboOpenRAVEsetup;
 addpath('recordAces');
 
 [h, d] = readAces(tname);
-[h, d] = acesRmFrame(h,d);
+disp(num2str(h))
+%[h, d] = acesRmFrame(h, d);
 
+%[h, d] = acesRmHand(h, d);
+
+if(sum(find(h == 99)) > 0 | sum(find(h == 70)) > 0)
+	s = length(h);
+	h = h(1:(s-1));
+	d = d(:,(1:(s-1)));
+end
+
+
+disp(num2str(h));
+disp(num2str(d));
 sAces = size(d);
 
 %% the joints used
-di = h(1:(length(h))) + 1;
+di = h(1:(length(h)));
 
 %% colision matrix
 co = [];
@@ -30,12 +42,11 @@ co = [];
 input('Set Video Settings then press ENTER');
 
 for( i = 1:sAces(1) )
-	disp(num2str(i))
 	%% get deg values
 	deg = d(i,:);
 
 	%% set correct directions
-	deg = deg.*orDir(di);
+	deg = deg.*orDir(di+1);
 
 	%% set robot
 	orRobotSetDOFValues(hubo,deg, di);
@@ -55,7 +66,6 @@ for( i = 1:sAces(1) )
         else
                 co(i) = 1;
         end
-	disp('e')
 
 end
 

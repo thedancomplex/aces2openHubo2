@@ -3,7 +3,7 @@ addpath('huboJointConstants');
 huboJointConst
 
 pth = what;
-T = 0.01;
+%T = 0.01;
 theStr = ['simulation stop ',num2str(T)];
 
 %orEnvSetOptions('simulation stop 0.01');

@@ -53,14 +53,24 @@ for(i = 1:length(mDes))
 	mo{i} = jn{ii};
 end
 
-tname = recordAces(mo,da,'huboThrowR2');
-theOut = playAces(tname,T);
 
-figure;
-v = sum((theOut').^2);
-plot((1:length(v))*T,v);
-xlabel('Time (sec)');
-ylabel('Velos (m/sec)');
-title('Velos magnitude of right hand in reference to the right foot');
+
+[mo, da] = smoothAces(mo,da,50);
+
+
+tname = recordAces(mo,da,'huboThrowR2');
+%theOut = playAces(tname,T);
+
+[h, d] = readAces(tname);
+
+%% pos
+figure
+plot(d)
+title('position')
+
+%% velos
+figure 
+plot(diff(d)/T)
+title('velos');
 
 
