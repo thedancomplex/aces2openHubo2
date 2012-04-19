@@ -56,12 +56,21 @@ end
 
 
 [mo, da] = smoothAces(mo,da,50);
+[ms, ds] = traj2setup(mo,da,300);
 
 
-tname = recordAces(mo,da,'huboThrowR2');
+fname = 'huboThrowR2';
+sname = recordAces(ms,ds,[fname,'.setup']);
+tname = recordAces(mo,da,[fname,'.main']);
 %theOut = playAces(tname,T);
 
+%playAces(sname,T);
+%playAces(tname,T);
+
 [h, d] = readAces(tname);
+
+
+
 
 %% pos
 figure
@@ -73,4 +82,32 @@ figure
 plot(diff(d)/T)
 title('velos');
 
+
+velot = playAces2(tname,T,2);
+v = sum((velot.^2)');
+figure
+plot((1:length(v))*T,v);
+xlabel('Time (sec)');
+ylabel('Speed (m/sec)');
+title('speed graph of right hand in reference to right foot');
+
+figure
+plot(da)
+xlabel('Time (sec)')
+ylabel('Pos (rad)')
+title('position of all joints')
+
+figure
+dda = diff(da)/T;
+plot(dda);
+xlabel('Time (sec)')
+ylabel('Velocity (rad/sec)');
+title(['Velocity of all joints at Multiplyer = ',num2str(rat)]);
+
+figure
+ddda = diff(dda)/T;
+plot(ddda);
+xlabel('Time (sec)')
+ylabel('Accelleration (rad/sec^2)');
+title(['Accelleration of all joints at Multiplyer = ',num2str(rat)]);
 
